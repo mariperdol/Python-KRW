@@ -6,13 +6,12 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_website(url):
-    """Scrape the title and content of a website."""
-    response = requests.get(url)
-    soup = BeautifulSoup(response.content, 'html.parser')
-    title = soup.title.string if soup.title else "No Title"
-    paragraphs = [p.text for p in soup.find_all('p')]
-    print(f"Title: {title}\nContent:\n{' '.join(paragraphs)}")
-
+def scrape_website(url, pages=1):
+    for page in range(1, pages + 1):
+        response = requests.get(f"{url}?page={page}")
+        soup = BeautifulSoup(response.content, 'html.parser')
+        print(f"Page {page}:")
+        for p in soup.find_all('p'):
+            print(p.text)
 # Example usage
 scrape_website("https://example.com")
