@@ -6,12 +6,14 @@
 import requests
 from bs4 import BeautifulSoup
 
-def scrape_website(url, pages=1):
-    for page in range(1, pages + 1):
-        response = requests.get(f"{url}?page={page}")
-        soup = BeautifulSoup(response.content, 'html.parser')
-        print(f"Page {page}:")
-        for p in soup.find_all('p'):
-            print(p.text)
+import json
+
+def scrape_website(url):
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    data = [{"paragraph": p.text} for p in soup.find_all('p')]
+    with open('scraped_data.json', 'w') as file:
+        json.dump(data, file, indent=4)
+    print("Data exported to scraped_data.json")
 # Example usage
 scrape_website("https://example.com")
