@@ -1,5 +1,3 @@
-### **Repository 7: Web Scraper**
-```python
 # Repository: python-web-scraper
 # Description: Scrape data from websites using BeautifulSoup.
 
